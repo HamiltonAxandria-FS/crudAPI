@@ -1,0 +1,29 @@
+GET http://localhost:8000/students
+
+###
+
+GET http://localhost:8000/students/64f8f385feddcbb236b58e28
+
+###
+
+POST http://localhost:8000/students
+Content-Type: application/json
+
+{
+    "name": "Axandria",
+    "class": "DWA"
+}
+
+###
+
+DELETE http://localhost:8000/students/64f8f385feddcbb236b58e28
+
+###
+
+PATCH http://localhost:8000/students/64f8f385feddcbb236b58e28
+Content-Type: application/json
+
+{
+    "name": "New Name",
+    "class": " New Class"
+}
