@@ -8,7 +8,7 @@ function App() {
 
 
   const API_BASE = process.env.NODE_ENV === `development`
-  ? `http://localhost:8000` 
+  ? `http://localhost:8000/api/v1/` 
   : process.env.REACT_APP_BASE_URL;
 
   let ignore = false;
@@ -26,7 +26,7 @@ function App() {
   const geStudents = async () => {
     setLoading(true)
     try{
-        await fetch(`${API_BASE}`)
+        await fetch(`${API_BASE}/students`)
                   .then(res => res.json())
                   .then(data => {
                     console.log({data})
