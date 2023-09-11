@@ -2,7 +2,7 @@
     "name": "apiwithclient",
     "version": "1.0.0",
     "engines": {
-        "node": "20.6.0"
+        "node": "20.0.0"
     },
     "scripts": {
         "install-reactjs": "npm install --prefix reactjs",
