@@ -3,9 +3,9 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import '../App.css';
 
 function Book() {
-  const [books, setBooks] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [setBooks] = useState(null)
+  const [ setLoading] = useState(false)
+  const [ setError] = useState(null)
 
 const [values, setValues] = useState({
     name: '',
