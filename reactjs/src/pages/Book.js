@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import '../App.css';
 
-function Student() {
-  const [students, setStudents] = useState(null)
+function Book() {
+  const [books, setBooks] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
 const [values, setValues] = useState({
     name: '',
-    class: ''
+    author: ''
 })
 
   const { id } = useParams()
@@ -23,7 +23,7 @@ const [values, setValues] = useState({
   useEffect(() => {
     
     if(!ignore){
-      getStudent();
+      getBook();
     }
 
     return () => {
@@ -31,17 +31,17 @@ const [values, setValues] = useState({
     }
   }, [])
 
-  const getStudent = async () => {
+  const getBook = async () => {
     setLoading(true)
     try{
-        await fetch(`${API_BASE}/students/${id}`)
+        await fetch(`${API_BASE}/books/${id}`)
                   .then(res => res.json())
                   .then(data => {
                     console.log({data})
-                    //const { name, class } = data;
+                    //const { name, author } = data;
                     setValues({
                         name: data.name, 
-                        class: data.class
+                        class: data.author
                     })
                   })
     }catch(error) {
@@ -51,14 +51,14 @@ const [values, setValues] = useState({
     }
   }
 
-const deleteStudent = async () => {
+const deleteBook = async () => {
     try{
-        await fetch(`${API_BASE}/students/${id}`, {
+        await fetch(`${API_BASE}/books/${id}`, {
             method: 'DELETE'
         })
                   .then(res => res.json())
                   .then(data => {
-                    setStudents(data)
+                    setBooks(data)
                     navigate("/dashboard", {replace: true })
                   })
     }catch(error) {
@@ -68,9 +68,9 @@ const deleteStudent = async () => {
     }
 }
 
-const updateStudent = async () => {
+const updateBook = async () => {
     try{
-        await fetch(`${API_BASE}/students/${id}`, {
+        await fetch(`${API_BASE}/books/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ const updateStudent = async () => {
         })
                   .then(res => res.json())
                   .then(data => {
-                    setStudents(data)
+                    setBooks(data)
                     navigate("/dashboard", {replace: true })
                   })
     }catch(error) {
@@ -91,7 +91,7 @@ const updateStudent = async () => {
 
 const handleSubmit = (event) => {
     event.preventDefault();
-    updateStudent();
+    updateBook();
 }
 
 
@@ -106,10 +106,10 @@ const handleInputChanges = (event) => {
   return (
     <div className="App">
       <header className="App-header">
-     <h1> Student Profile </h1>
+     <h1> Book Information </h1>
      <h5> {values && values.name } </h5>
-     <p>{values && values.class}</p>
-     <button onClick={() => deleteStudent()}>Delete Student</button>
+     <p>{values && values.author}</p>
+     <button onClick={() => deleteBook()}>Delete Book</button>
      <Link to="/">Home</Link>
      <Link to="/dashboard">Dashboard</Link>
 
@@ -121,7 +121,7 @@ const handleInputChanges = (event) => {
         <input type="submit" value="Submit" />
         <label>
             Class:
-            <input type="text" name="class" value={values.class} onChange={handleInputChanges} />
+            <input type="text" name="author" value={values.author} onChange={handleInputChanges} />
         </label>
         <input type="submit" value="Submit" />
      </form>
@@ -130,4 +130,4 @@ const handleInputChanges = (event) => {
   );
 }
 
-export default Student;
+export default Book;
