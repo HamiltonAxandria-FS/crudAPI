@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 function Dashboard() {
-  const [students, setStudents] = useState(null)
+  const [books, setBooks] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [values, setValues] = useState({
     name: '',
-    class: ''
+    author: ''
   })
 
   const API_BASE = process.env.NODE_ENV === 'development'
@@ -21,7 +21,7 @@ function Dashboard() {
       
 
       if(!ignore){
-        getStudents();
+        getBooks();
       }
 
       return () => {
@@ -29,14 +29,14 @@ function Dashboard() {
       }
     }, [])
 
-    const getStudents = async () => {
+    const getBooks = async () => {
       setLoading(true)
       try {
-        await fetch(`${API_BASE}/students`)
+        await fetch(`${API_BASE}/books`)
                   .then(res => res.json())
                   .then(data => {
                     console.log({data})
-                    setStudents(data)
+                    setBooks(data)
                   })
       } catch(error) {
         setError(error.message || "Unexpected Error")
@@ -45,15 +45,15 @@ function Dashboard() {
       }
     }
 
-    const createStudent = async () => {
+    const createBook = async () => {
       try {
-          await fetch(`${API_BASE}/students`, {
+          await fetch(`${API_BASE}/books`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
               },
               body: JSON.stringify(values)
-          }).then(() => getStudents())
+          }).then(() => getBooks())
         } catch(error) {
           setError(error.message || "Unexpected Error")
         } finally {
@@ -63,7 +63,7 @@ function Dashboard() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      createStudent();
+      createBook();
   }
 
   const handleInputChanges = (event) => {
@@ -78,13 +78,13 @@ function Dashboard() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Students:</h1>
+        <h1>Books:</h1>
         <Link to="/">Home</Link>
         <ul>
           {
-            students?.map(student => (
-              <li key={student._id}>
-                <Link to={`/students/${student._id}`}>{student.name}</Link>
+            books?.map(book => (
+              <li key={book._id}>
+                <Link to={`/books/${book._id}`}>{book.name}</Link>
               </li>
             ))
           }
@@ -95,8 +95,8 @@ function Dashboard() {
                 <input type="text" name="name" value={values.name} onChange={handleInputChanges} />
             </label>
             <label>
-                Class:
-                <input type="text" name="class" value={values.class} onChange={handleInputChanges} />
+                Author:
+                <input type="text" name="author" value={values.author} onChange={handleInputChanges} />
             </label>
             <input type="submit" value="Submit" />
         </form>

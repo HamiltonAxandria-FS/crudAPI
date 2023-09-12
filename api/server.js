@@ -9,7 +9,7 @@ app.use(cors ());
 
 const PORT = process.env.PORT || 8000;
 
-const studentRouter = require('./routes/students.js')
+const bookRouter = require('./routes/books.js')
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -21,7 +21,7 @@ db.once('open', () => console.log("Database Connection Established"))
 
 
 app.use(express.json())
-app.use('/api/v1/students', studentRouter)
+app.use('/api/v1/books', bookRouter)
 
 app.use(express.static(path.join(__dirname, '../reactjs/build')));
 
