@@ -1,8 +1,6 @@
 const { config } = require("dotenv");
 const User = require("../models/user");
 const jwt = require('jwt-simple')
-const config = require('../config');
-
 
 const tokenForUser = user => {
     const timestamp = new Date().getTime();
@@ -12,17 +10,23 @@ const tokenForUser = user => {
     }, config.secret)
 }
 
-exports.signup = (req,res,next) => {
-    const user = req.user;
-    res.send({ token: tokenForUser(user), user_id: user._id})
+exports.signup = (req, res, next) => {
+    const { email, password } = req.body;
+    const user = new User({
+        email: email,
+        password: password
+    });
+    user.save()
+        .then((savedUser) => {
+            const token = tokenForUser(savedUser);
+            res.json({ token: token, user_id: savedUser._id });
+        })
+        .catch((error) => {
+            return next(error);
+        });
+};
 
-
-}
-
-
-
-
-exports.signup = (req,res,next) => {
+exports.signin = (req,res,next) => {
     const {
         email,
         password
