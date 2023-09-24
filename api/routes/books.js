@@ -1,8 +1,8 @@
 const express = require('express');
-const passport = require('passport')
+const passport = require('../services/passport')
 const passportService = require('../services/passport')
 
-const protectedRoute = passport.authenticate('jwt', {session: false })
+const protectedRoute = passport.authenticate ('jwt', {session: false })
 const router = express.Router();
 
 const Book = require('../models/book')
@@ -10,7 +10,7 @@ const Book = require('../models/book')
 // GET, POST, PATCH, DELETE
 
 const getBook = async (req, res, next) => {
-    let book
+    let book 
     try {
         book = await Book.findById(req.params.id)
         if( book === null){
